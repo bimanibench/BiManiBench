@@ -1,31 +1,48 @@
 
 <div align="center">
 
-<!-- 1. LOGO & TITLE -->
+<!-- 1. LOGO -->
+<img src="static/images/logo.png" width="150px">
 
-<img src="static/images/logo.png" width="120px">
+<!-- 2. TITLE -->
+<h1>BiManiBench</h1>
+<p align="center">
+  <b>A Hierarchical Benchmark for Evaluating Bimanual Coordination of Multimodal Large Language Models</b>
+</p>
 
-# BiManiBench
+<!-- 3. AUTHORS (使用纯 HTML 确保渲染整洁) -->
+<div>
+  <a href="https://openreview.net/profile?id=%7EXin_Wu13">Xin Wu</a><sup>1*</sup>, 
+  <a href="https://liang-zx.github.io/">Zhixuan Liang</a><sup>2*</sup>, 
+  <a href="https://mayuelala.github.io/">Yue Ma</a><sup>3,4†</sup>, 
+  <a href="https://aaron617.github.io/">Mengkang Hu</a><sup>2</sup>, 
+  <a href="https://openreview.net/profile?id=~Zhiyuan_Qin1">Zhiyuan Qin</a><sup>4</sup>, 
+  <a href="https://openreview.net/profile?id=~Xiu_Li1">Xiu Li</a><sup>1†</sup>
+</div>
 
-### A Hierarchical Benchmark for Evaluating Bimanual Coordination of Multimodal Large Language Models
+<!-- 4. INSTITUTIONS -->
+<div style="margin-top: 10px;">
+  <sup>1</sup>Tsinghua University &nbsp;&nbsp; 
+  <sup>2</sup>The University of Hong Kong &nbsp;&nbsp; 
+  <sup>3</sup>HKUST &nbsp;&nbsp; 
+  <sup>4</sup>Beijing Innovation Center of Humanoid Robotics
+</div>
 
-[**Xin Wu**](https://openreview.net/profile?id=%7EXin_Wu13)`<sup>`1*`</sup>` · [**Zhixuan Liang**](https://liang-zx.github.io/)`<sup>`2*`</sup>` · [**Yue Ma**](https://mayuelala.github.io/)`<sup>`3,4†`</sup>` · [**Mengkang Hu**](https://aaron617.github.io/)`<sup>`2`</sup>` · [**Zhiyuan Qin**](https://openreview.net/profile?id=~Zhiyuan_Qin1)`<sup>`4`</sup>` · [**Xiu Li**](https://openreview.net/profile?id=~Xiu_Li1)`<sup>`1†`</sup>`
+<!-- 5. NOTES -->
+<div style="margin-top: 5px; font-size: 0.9em;">
+  <sup>*</sup>Equal Contribution &nbsp;&nbsp; <sup>†</sup>Corresponding Authors
+</div>
 
-`<sup>`1`</sup>`Tsinghua University &nbsp;&nbsp; `<sup>`2`</sup>`The University of Hong Kong &nbsp;&nbsp; `<sup>`3`</sup>`HKUST &nbsp;&nbsp; `<sup>`4`</sup>`Beijing Innovation Center of Humanoid Robotics
-`<br>`
-`<sup>`*`</sup>`Equal Contribution &nbsp;&nbsp; `<sup>`†`</sup>`Corresponding Authors
+<br>
 
----
-
-<!-- 2. QUICK LINKS -->
-
-[![Project Page](https://img.shields.io/badge/Project-Page-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](https://bimanibench.github.io/)
-[![arXiv](https://img.shields.io/badge/arXiv-Coming_Soon-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white)](https://bimanibench.github.io/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+<!-- 6. BADGES (优化后的徽章代码) -->
+<a href="https://bimanibench.github.io/"><img src="https://img.shields.io/badge/Project-Page-blue?style=for-the-badge&logo=googlechrome&logoColor=white"></a>
+<a href="https://bimanibench.github.io/"><img src="https://img.shields.io/badge/arXiv-Coming_Soon-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge"></a>
 
 </div>
 
----
+
 
 ## 📢 News
 
@@ -71,15 +88,13 @@ While current research in embodied AI has made significant strides in single-arm
 # Example commands (coming soon)
 git clone https://github.com/bimanibench/BiManiBench.git
 cd BiManiBench
-pip install -r requirements.txt
+bash script/_install.sh
 ```
 
 
 ## 🖋️ Citation
 
 **If you find BiManiBench useful in your research, please cite our work:**
-
-**code**
 
 ```
 @article{wu2026bimanibench,
