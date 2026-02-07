@@ -1,0 +1,182 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Robotic Arm Action Schema",
+    "definitions": {
+      "ArmTag": {
+        "type": "string",
+        "enum": ["left", "right"],
+        "description": "Identifier for robotic arm (left/right)"
+      },
+      "Pose": {
+        "type": "array",
+        "items": {"type": "number"},
+        "minItems": 3,
+        "maxItems": 7,
+        "description": "3D position (xyz) or pose with quaternion (xyz+qwqxqyqz)"
+      },
+      "Actor": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "grasp_points": {
+            "type": "array",
+            "items": {"type": "integer"}
+          }
+        }
+      }
+    },
+    "actions": {
+      "grasp_actor": {
+        "description": "Generates motion sequence to grasp a target object",
+        "parameters": {
+          "actor": {"$ref": "#/definitions/Actor"},
+          "arm_tag": {"$ref": "#/definitions/ArmTag"},
+          "pre_grasp_dis": {
+            "type": "number",
+            "default": 0.1,
+            "minimum": 0,
+            "description": "Approach distance before grasping (meters)"
+          },
+          "grasp_dis": {
+            "type": "number",
+            "default": 0,
+            "description": "Final grasping offset from object surface"
+          },
+          "gripper_pos": {
+            "type": "number",
+            "default": 0,
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Gripper closure position (0=fully closed)"
+          },
+          "contact_point_id": {
+            "type": ["array", "null"],
+            "items": {"type": "integer"},
+            "default": null,
+            "description": "Preferred contact point IDs on object"
+          }
+        },
+        "returns": {
+          "description": "(arm_tag, action_list) tuple",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "arm_tag": {"$ref": "#/definitions/ArmTag"},
+              "actions": {"type": "array"}
+            }
+          }
+        }
+      },
+      "place_actor": {
+        "description": "Places held object at target pose with alignment strategy",
+        "parameters": {
+          "actor": {"$ref": "#/definitions/Actor"},
+          "arm_tag": {"$ref": "#/definitions/ArmTag"},
+          "target_pose": {"$ref": "#/definitions/Pose"},
+          "functional_point_id": {
+            "type": ["integer", "null"],
+            "default": null,
+            "description": "ID of functional point to align"
+          },
+          "pre_dis": {
+            "type": "number",
+            "default": 0.1,
+            "description": "Pre-place approach distance"
+          },
+          "dis": {
+            "type": "number",
+            "default": 0.02,
+            "description": "Final placement offset"
+          },
+          "is_open": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to open gripper after placement"
+          },
+          "constrain": {
+            "type": "string",
+            "enum": ["free", "align", "auto"],
+            "default": "auto",
+            "description": "Pose alignment strategy"
+          },
+          "align_axis": {
+            "type": ["array", "null"],
+            "default": null,
+            "description": "World-space vectors for alignment"
+          },
+          "pre_dis_axis": {
+            "type": ["string", "array"],
+            "enum": ["grasp", "fp"],
+            "default": "grasp",
+            "description": "Direction vector for pre-place offset"
+          }
+        }
+      },
+      "move_by_displacement": {
+        "description": "Moves end-effector by relative displacement",
+        "parameters": {
+          "arm_tag": {"$ref": "#/definitions/ArmTag"},
+          "x": {"type": "number", "default": 0},
+          "y": {"type": "number", "default": 0},
+          "z": {"type": "number", "default": 0},
+          "quat": {
+            "type": ["array", "null"],
+            "items": {"type": "number"},
+            "default": null,
+            "description": "Target orientation as quaternion"
+          },
+          "move_axis": {
+            "type": "string",
+            "enum": ["world", "arm"],
+            "default": "world",
+            "description": "Coordinate frame for displacement"
+          }
+        }
+      },
+      "move_to_pose": {
+        "description": "Moves end-effector to absolute pose",
+        "parameters": {
+          "arm_tag": {"$ref": "#/definitions/ArmTag"},
+          "target_pose": {"$ref": "#/definitions/Pose"}
+        }
+      },
+      "close_gripper": {
+        "description": "Closes gripper to specified position",
+        "parameters": {
+          "arm_tag": {"$ref": "#/definitions/ArmTag"},
+          "pos": {
+            "type": "number",
+            "default": 0,
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      },
+      "open_gripper": {
+        "description": "Opens gripper to specified position",
+        "parameters": {
+          "arm_tag": {"$ref": "#/definitions/ArmTag"},
+          "pos": {
+            "type": "number",
+            "default": 1,
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      },
+      "back_to_origin": {
+        "description": "Returns arm to predefined home position",
+        "parameters": {
+          "arm_tag": {"$ref": "#/definitions/ArmTag"}
+        }
+      },
+      "get_arm_pose": {
+        "description": "Queries current end-effector pose",
+        "parameters": {
+          "arm_tag": {"$ref": "#/definitions/ArmTag"}
+        },
+        "returns": {"$ref": "#/definitions/Pose"}
+      }
+    }
+  }
