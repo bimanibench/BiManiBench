@@ -104,3 +104,10 @@ bash script/_install.sh
   year      = {2026},
 }
 ```
+## 🤝 Acknowledgements
+BiManiBench is built upon the great efforts of the open-source community. We would like to express our gratitude to the following projects:
+
+- **[RoboTwin 2.0](https://github.com/robotwin-Platform/robotwin)**: Our simulation environments are built upon the RoboTwin 2.0 framework. We have significantly modified its core codebase to support bimanual interfaces and extended its vast collection of assets, environments, and evaluation tasks for dual-arm coordination.
+- **[EmbodiedBench](https://github.com/EmbodiedBench/EmbodiedBench)**: Our MLLM-based agent pipeline is inspired by and adapted from EmbodiedBench. While EmbodiedBench focuses on a wide range of single-arm tasks, we specifically leveraged and re-engineered its agent design—including the decision-making logic, high-level environment interaction, and API communication protocols—to support hierarchical bimanual manipulation.
+
+We sincerely thank the authors of these projects for their pioneering contributions to the field.
