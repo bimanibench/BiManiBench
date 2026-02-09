@@ -3,10 +3,10 @@ import re
 import base64
 import copy
 from mimetypes import guess_type
-import google.generativeai as genai
-from openai import OpenAI, AzureOpenAI
-import typing_extensions as typing
-from pydantic import BaseModel, Field
+# import google.generativeai as genai
+# from openai import OpenAI, AzureOpenAI
+# import typing_extensions as typing
+# from pydantic import BaseModel, Field
 import json
 
 template_spatial = '''

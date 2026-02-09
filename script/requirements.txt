@@ -13,6 +13,7 @@ zarr
 openai
 huggingface_hub==0.25.0
 h5py
+lmdeploy
 # For Description Generation
 azure==4.0.0
 azure-ai-inference

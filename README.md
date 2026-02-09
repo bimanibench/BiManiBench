@@ -220,8 +220,8 @@ python script/run_eval_high_level.py --task <TASK_NAME> --gpu <GPU_ID> --model <
 **Supported Tasks (`--task`):**
 | Robotic arm types | Task Names |
 | :--- | :--- |
-| **ARX** | `handover_mic`, `blocks_ranking_size`, `hanging_mug`, `place_cans_plasticbox`, `place_burger_fries`, `stack_blocks_three`, `handover_block` |
-| **Franka** | `blocks_ranking_rgb`, `place_object_basket`, `place_bread_skillet`, `stack_bowls_three`, `blocks_tower`, `blocks_cross_shape` |
+| **ARX-X5** | `handover_mic`, `blocks_ranking_size`, `hanging_mug`, `place_cans_plasticbox`, `place_burger_fries`, `stack_blocks_three`, `handover_block` |
+| **Franka-Panda** | `blocks_ranking_rgb`, `place_object_basket`, `place_bread_skillet`, `stack_bowls_three`, `blocks_tower`, `blocks_cross_shape` |
 | **Piper** | `put_bottles_dustbin` |
 
 ---
@@ -242,6 +242,11 @@ python script/run_eval_low_level.py --task <TASK_NAME> --gpu <GPU_ID> --model <M
 *   `place_bread_skillet`
 
 ---
+**Config Path Issue:** If you encounter issue like `Error setting up environment for round0, episode 0: 'Robot' object has no attribute 'left_planner'`, try running:
+```bash
+    python script/update_embodiment_config_path.py
+```
+
 
 #### Example Usage
 To evaluate a model named `gpt-4o` on the `cluttered` spatial reasoning setting using GPU 0:
