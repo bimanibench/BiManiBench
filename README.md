@@ -80,16 +80,86 @@ While current research in embodied AI has made significant strides in single-arm
 
 ---
 
-## 🛠️ Installation & Quick Start
+## 🛠️ Installation and Deployment
 
 *Code release is in progress. Stay tuned!*
 
+Installation tutorial can be found at [RoboTwin installation guide](https://github.com/RoboTwin-Platform/RoboTwin). Since this project is built upon the RoboTwin framework, the installation process is largely identical.
+
+#### 1. Install Vulkan (if not installed)
+This project requires Vulkan for rendering. Please ensure the drivers and tools are installed:
+
 ```bash
-# Example commands (coming soon)
+sudo apt update
+sudo apt install libvulkan1 mesa-vulkan-drivers vulkan-tools
+```
+
+**Verification:**
+Check the installation by running:
+```bash
+vulkaninfo
+```
+
+### 2. Basic Environment Setup
+First, prepare a Conda environment and clone the repository:
+
+```bash
+# Create and activate environment
+conda create -n bimanibench python=3.10 -y
+conda activate bimanibench
+
+# Clone the repository
 git clone https://github.com/bimanibench/BiManiBench.git
 cd BiManiBench
+```
+
+Next, run the installation script to install basic dependencies and **CuRobo**:
+
+```bash
 bash script/_install.sh
 ```
+
+#### Troubleshooting & Notes:
+*   **CuRobo Config Path:** If you encounter a `curobo` configuration path issue, try running:
+    ```bash
+    python script/update_embodiment_config_path.py
+    ```
+*   **Manual Installation:** If you encounter any problems during the automated script, please refer to the manual installation section in the original RoboTwin docs.
+*   **Pytorch3D:** If the installation of `pytorch3d` fails and you are not using 3D data, it will not affect the core functionality of the project.
+*   **FFmpeg:** This project requires FFmpeg. Please ensure it is installed by checking:
+    ```bash
+    ffmpeg -version
+    ```
+    If it is not installed, please visit [https://ffmpeg.org/](https://ffmpeg.org/) for instructions.
+
+### 3. Download Assets
+Download the required assets (RoboTwin-OD, Texture Library, and Embodiments) by running the following command. 
+
+*Note: If you encounter any rate-limit issues with Hugging Face, please log in to your account first:*
+
+```bash
+# Optional: Login to Hugging Face
+huggingface-cli login
+
+# Download assets
+bash script/_download_assets.sh
+```
+
+#### Assets Folder Structure
+After downloading, your `assets` folder should follow this structure:
+
+```text
+assets
+├── background_texture
+├── embodiments
+│   ├── embodiment_1
+│   │   ├── config.yml
+│   │   └── ...
+│   └── ...
+├── objects
+└── ...
+```
+
 
 
 ## 🖋️ Citation

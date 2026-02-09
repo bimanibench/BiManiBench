@@ -3,11 +3,11 @@ import sys
 import os
 import re
 import base64
-import anthropic
-import google.generativeai as genai
+# import anthropic
+# import google.generativeai as genai
 from openai import OpenAI
-import typing_extensions as typing
-import lmdeploy
+# import typing_extensions as typing
+# import lmdeploy
 from lmdeploy import pipeline, GenerationConfig, PytorchEngineConfig
 from generation_guide import vlm_generation_guide
 # from embodiedbench.planner.planner_config.generation_guide_manip import llm_generation_guide_manip, vlm_generation_guide_manip
