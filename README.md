@@ -161,7 +161,7 @@ assets
 ```
 
 
-## Quick Start
+## 🚀 Quick Start
 
 This section provides a quick start guide for configuring your models and running the evaluation benchmarks.
 
