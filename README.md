@@ -244,7 +244,7 @@ python script/run_eval_low_level.py --task <TASK_NAME> --gpu <GPU_ID> --model <M
 ---
 **Config Path Issue:** If you encounter issue like `Error setting up environment for round0, episode 0: 'Robot' object has no attribute 'left_planner'`, try running:
 ```bash
-    python script/update_embodiment_config_path.py
+python script/update_embodiment_config_path.py
 ```
 
 
