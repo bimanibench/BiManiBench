@@ -161,6 +161,95 @@ assets
 ```
 
 
+## Quick Start
+
+This section provides a quick start guide for configuring your models and running the evaluation benchmarks.
+
+### 1. Model Configuration
+
+Before running the evaluation scripts, you must configure your model settings in `script/remote_model.py`. This script handles both locally deployed open-source models and remote API-based models.
+
+#### Local Deployment
+By default, the project assumes local models are served via an OpenAI-compatible server (e.g., vLLM or LMDeploy) at:
+`http://localhost:8000/v1`
+
+#### API Configuration
+If you are using proprietary models (e.g., GPT, Claude, Gemini) or specific remote providers, you need to edit `script/remote_model.py` to provide your **API Key** and **Base URL**.
+
+Locate the following block and update the placeholders:
+```python
+# script/remote_model.py
+
+if "gpt" in self.model_name:
+    self.model = OpenAI(
+        api_key="YOUR_API_KEY",
+        base_url="YOUR_API_URL"
+    )
+elif "claude" in self.model_name:
+    # Set your Claude API details here
+    ...
+```
+
+---
+
+### 2. Running Evaluation
+
+We provide evaluation scripts for three different hierarchical levels. Ensure your environment is activated and you are in the project root directory.
+
+#### Level 1: Dual-Arm Spatial Reasoning
+This level evaluates the model's ability to understand spatial relationships in different scene complexities.
+
+**Command:**
+```bash
+python script/run_eval_spatial.py --setting <SETTING> --gpu <GPU_ID> --model <MODEL_NAME>
+```
+*   `--setting`: Choose from `sparse`, `cluttered`, or `dense`.
+*   `--gpu`: GPU ID(s) to use (e.g., `0`).
+*   `--model`: The name/path of the model configured in `remote_model.py`.
+
+---
+
+#### Level 2: High-Level Action Planning
+This level evaluates the model's ability to generate long-horizon task plans.
+
+**Command:**
+```bash
+python script/run_eval_high_level.py --task <TASK_NAME> --gpu <GPU_ID> --model <MODEL_NAME>
+```
+
+**Supported Tasks (`--task`):**
+| Robotic arm types | Task Names |
+| :--- | :--- |
+| **ARX** | `handover_mic`, `blocks_ranking_size`, `hanging_mug`, `place_cans_plasticbox`, `place_burger_fries`, `stack_blocks_three`, `handover_block` |
+| **Franka** | `blocks_ranking_rgb`, `place_object_basket`, `place_bread_skillet`, `stack_bowls_three`, `blocks_tower`, `blocks_cross_shape` |
+| **Piper** | `put_bottles_dustbin` |
+
+---
+
+#### Level 3: Low-Level End-Effector Control
+This level evaluates fine-grained control and precise end-effector positioning.
+
+**Command:**
+```bash
+python script/run_eval_low_level.py --task <TASK_NAME> --gpu <GPU_ID> --model <MODEL_NAME>
+```
+
+**Supported Tasks (`--task`):**
+*   `place_object_scale`
+*   `place_burger_fries`
+*   `grab_roller`
+*   `stack_blocks_two`
+*   `place_bread_skillet`
+
+---
+
+#### Example Usage
+To evaluate a model named `gpt-4o` on the `cluttered` spatial reasoning setting using GPU 0:
+```bash
+python script/run_eval_spatial.py --setting cluttered --gpu 0 --model gpt-4o
+```
+
+
 
 ## 🖋️ Citation
 

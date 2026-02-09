@@ -15,7 +15,7 @@ from planner_utils import convert_format_2claude,convert_format_2gemini, fix_jso
 
 temperature = 0
 max_completion_tokens = 4096
-remote_url = os.environ.get('remote_url')
+# remote_url = os.environ.get('remote_url')
 
 class RemoteModel:
     def __init__(
@@ -63,15 +63,15 @@ class RemoteModel:
             elif "Qwen2-VL" in self.model_name:
                 self.model = OpenAI(base_url = remote_url)
             elif "Qwen2.5-VL" in self.model_name or "Qwen3" in self.model_name:
-                self.model = OpenAI(base_url = remote_url,api_key="00000001")
+                self.model = OpenAI(base_url = remote_url,api_key="00000000")
             elif "Ovis2" in self.model_name:
-                self.model = OpenAI(base_url = remote_url,api_key="00000002")
+                self.model = OpenAI(base_url = remote_url,api_key="00000000")
             elif "Llama-3.2-90B-Vision-Instruct" in self.model_name:
-                self.model = OpenAI(base_url = remote_url,api_key="00000002")
+                self.model = OpenAI(base_url = remote_url,api_key="00000000")
             elif "Llama-4-Scout-17B-16E-Instruct" in self.model_name:
-                self.model = OpenAI(base_url = remote_url,api_key="00000002")
+                self.model = OpenAI(base_url = remote_url,api_key="00000000")
             elif "LLM-Research" in self.model_name:
-                self.model = OpenAI(base_url = remote_url,api_key="00000002")
+                self.model = OpenAI(base_url = remote_url,api_key="00000000")
             elif "OpenGVLab/InternVL" in self.model_name:
                 self.model = OpenAI(base_url = remote_url,api_key="00000000")
             elif "meta-llama/Llama-3.2-90B-Vision-Instruct" in self.model_name:

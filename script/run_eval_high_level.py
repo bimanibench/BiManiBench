@@ -29,7 +29,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", type=str, required=True, help="Task name to evaluate")
     parser.add_argument("--gpu", type=str, default="0", help="GPU ID(s), e.g., 0 or 0,1")
-    parser.add_argument("--model", type=str, required=True, help="Model path")
+    parser.add_argument("--model", type=str, required=True, help="Model name")
     args = parser.parse_args()
 
     current_file_path = os.path.abspath(__file__)
@@ -41,7 +41,6 @@ def main():
         print(f"Error: Task '{args.task}' not found in TASK_CONFIG_MAP.")
         return
 
-    # 3. 构建命令 (注意这里使用 script/myvlmEb_eval.py，因为我们要从根目录启动)
     cmd = [
         "python", "script/myvlmEb_eval.py",
         "--config", "policy/vlmpolicy/deploy_policy.yml",

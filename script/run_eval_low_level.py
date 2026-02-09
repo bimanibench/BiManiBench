@@ -35,7 +35,7 @@ def main():
     parser.add_argument("--task", type=str, required=True, choices=list(TASK_CONFIG_MAP.keys()),
                         help="The task name to evaluate")
     parser.add_argument("--gpu", type=str, default="0", help="GPU ID(s) to use")
-    parser.add_argument("--model", type=str, required=True, help="Model name or path")
+    parser.add_argument("--model", type=str, required=True, help="Model name")
     # parser.add_argument("--seed", type=int, default=0, help="Random seed")
     
     args = parser.parse_args()

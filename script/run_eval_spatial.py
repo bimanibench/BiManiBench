@@ -27,7 +27,7 @@ def main():
     parser.add_argument("--setting", type=str, required=True, choices=["sparse", "cluttered", "dense"],
                         help="The spatial evaluation setting (sparse, cluttered, or dense)")
     parser.add_argument("--gpu", type=str, default="0", help="GPU ID(s) to use")
-    parser.add_argument("--model", type=str, required=True, help="Path to the model or model name")
+    parser.add_argument("--model", type=str, required=True, help="model name")
     # parser.add_argument("--seed", type=int, default=0, help="Random seed for evaluation")
     
     args = parser.parse_args()
