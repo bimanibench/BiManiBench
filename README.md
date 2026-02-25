@@ -47,7 +47,7 @@
 ## 📢 News
 
 - **[2026-02]** BiManiBench project page and preprint are released!
-- **[2026-02]** Evaluation code and benchmark assets are coming soon.
+- **[2026-02]** **Evaluation code and benchmark assets are now available!**
 
 ---
 
@@ -82,7 +82,7 @@ While current research in embodied AI has made significant strides in single-arm
 
 ## 🛠️ Installation and Deployment
 
-*Code release is in progress. Stay tuned!*
+<!-- *Code release is in progress. Stay tuned!* -->
 
 Installation tutorial can be found at [RoboTwin installation guide](https://github.com/RoboTwin-Platform/RoboTwin). Since this project is built upon the RoboTwin framework, the installation process is largely identical.
 
