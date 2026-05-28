@@ -36,6 +36,25 @@ def write_print(content,file_path,writeIt):
         print(f"step {writeIt}: ***************",file=f)
         print(content,file=f)
 
+def to_jsonable(value):
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    if isinstance(value, np.generic):
+        return value.item()
+    if isinstance(value, Path):
+        return str(value)
+    if isinstance(value, Exception):
+        return str(value)
+    if isinstance(value, dict):
+        return {str(k): to_jsonable(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [to_jsonable(v) for v in value]
+    return value
+
+def append_spatial_raw_record(record_path, record):
+    with open(record_path, 'a', encoding='utf-8') as f:
+        f.write(json.dumps(to_jsonable(record), ensure_ascii=False) + "\n")
+
 def eval_policy(task_name,
                 TASK_ENV,
                 args,
@@ -81,6 +100,7 @@ def eval_policy(task_name,
                                                         use_feedback=True, tp=1,prompt_out_path=prompt_out_path,user_instruction=task_description)
 
     score_record_path = f"{save_dir}/score_record.txt"
+    raw_record_path = f"{save_dir}/{args.get('spatial_raw_record_name', 'spatial_raw_records.jsonl')}"
     # failed_record_path = f"{save_dir}/failed_record.txt"
     modelname_record_path = f"{save_dir}/model_name.txt"
     # record the model name
@@ -132,6 +152,25 @@ def eval_policy(task_name,
                 print(out)
                 write_print(out,filename_vlmout,now_action_cnt)
                 eval_res = TASK_ENV.evaluate_spatial(resultsList)
+                raw_record = {
+                    "task_name": task_name,
+                    "round": round,
+                    "episode": now_episode,
+                    "seed": now_seed,
+                    "action_attempt": now_action_cnt,
+                    "model_name": model_name,
+                    "results_object": resultsList,
+                    "model_output": out,
+                    "eval_result": eval_res,
+                    "obs_image": filename,
+                    "third_view_image": filename_third,
+                }
+                if hasattr(TASK_ENV, "collect_spatial_raw_data"):
+                    try:
+                        raw_record["spatial_raw"] = TASK_ENV.collect_spatial_raw_data(resultsList)
+                    except Exception as e:
+                        raw_record["spatial_raw_error"] = str(e)
+                append_spatial_raw_record(raw_record_path, raw_record)
 
                 if isinstance(eval_res,int) or isinstance(eval_res,float):
                     print(f"round {round}, episode {now_episode}, score: {eval_res}\n")
@@ -145,6 +184,14 @@ def eval_policy(task_name,
                 print(f"round {round}, episode {now_episode}, score: 0\n")
                 with open(score_record_path, 'a', encoding='utf-8') as f:
                     f.write(f"Task {task_name} at round {round}, episode {now_episode}, score: 0\n")
+                append_spatial_raw_record(raw_record_path, {
+                    "task_name": task_name,
+                    "round": round,
+                    "episode": now_episode,
+                    "seed": now_seed,
+                    "status": "failed_after_output_limit",
+                    "eval_result": 0,
+                })
             TASK_ENV.test_num += 1
             now_episode += 1
             now_seed += 1

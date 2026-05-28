@@ -210,8 +210,68 @@ class blocks_ranking_rgb_spatial(Base_Task):
                 and np.all(abs(block2_pose[:2] - block3_pose[:2]) < eps) and block1_pose[0] < block2_pose[0]
                 and block2_pose[0] < block3_pose[0] and self.is_left_gripper_open() and self.is_right_gripper_open())
 
+    def collect_spatial_raw_data(self, results_object, sigma=0.05 / 2):
+        rgb_result = ['', '', '']
+
+        def assign_arm(item):
+            obj = item["object"].lower()
+            arm = item["use_arm"].lower()
+            if "red" in obj:
+                rgb_result[0] = arm
+            elif "green" in obj:
+                rgb_result[1] = arm
+            elif "blue" in obj:
+                rgb_result[2] = arm
+            else:
+                print("unknown color:", obj)
+
+        if isinstance(results_object, list):
+            for item in results_object:
+                assign_arm(item)
+        elif isinstance(results_object, dict):
+            assign_arm(results_object)
+        else:
+            print("results_object 类型错误")
+
+        blocks = [self.block1, self.block2, self.block3]
+        colors = ["red", "green", "blue"]
+        target_poses = [self.block1_target_pose, self.block2_target_pose, self.block3_target_pose]
+        items = []
+
+        for i in range(3):
+            block_pose = blocks[i].get_pose().p
+            pose_x = float(block_pose[0])
+            arm = rgb_result[i]
+            true_arm = "left" if pose_x < 0 else "right"
+            dist = abs(pose_x)
+            is_correct = arm == true_arm
+            smooth_weight = 1.0 if is_correct else math.exp(- (dist ** 2) / (2 * sigma ** 2))
+            score = 100.0 * smooth_weight
+
+            items.append({
+                "object": colors[i],
+                "predicted_arm": arm,
+                "true_arm": true_arm,
+                "is_correct": is_correct,
+                "pose": [float(x) for x in block_pose.tolist()],
+                "target_pose": [float(x) for x in target_poses[i]],
+                "pose_x": pose_x,
+                "dist_abs_x": float(dist),
+                "smooth_weight": float(smooth_weight),
+                "score": float(score),
+            })
+
+        return {
+            "sigma": float(sigma),
+            "items": items,
+            "score_list": [item["score"] for item in items],
+            "total_score": float(sum(item["score"] for item in items) / len(items)),
+        }
+
     def evaluate_spatial(self,results_object):
         try:
+            sigma = 0.05 / 2
+            return self.collect_spatial_raw_data(results_object, sigma=sigma)["total_score"]
             rgb_result = ['', '', '']
 
             def assign_arm(item):

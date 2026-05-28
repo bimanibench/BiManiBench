@@ -28,6 +28,8 @@ def main():
                         help="The spatial evaluation setting (sparse, cluttered, or dense)")
     parser.add_argument("--gpu", type=str, default="0", help="GPU ID(s) to use")
     parser.add_argument("--model", type=str, required=True, help="model name")
+    parser.add_argument("--spatial_raw_record_name", type=str, default="spatial_raw_records.jsonl",
+                        help="JSONL filename used to save per-episode raw spatial scoring data")
     # parser.add_argument("--seed", type=int, default=0, help="Random seed for evaluation")
     
     args = parser.parse_args()
@@ -56,7 +58,8 @@ def main():
         "--ckpt_setting", config_name,
         "--seed", str(0),
         "--policy_name", policy_name,
-        "--model_name", args.model
+        "--model_name", args.model,
+        "--spatial_raw_record_name", args.spatial_raw_record_name
     ]
 
     # 5. Prepare environment variables
@@ -76,6 +79,7 @@ def main():
     print(f"Mapped Config:  {config_name}")
     print(f"GPU ID:         {args.gpu}")
     print(f"Model Path:     {args.model}")
+    print(f"Raw JSONL:      {args.spatial_raw_record_name}")
     print(f"Root Dir:       {root_dir}")
     print("=" * 60)
 
